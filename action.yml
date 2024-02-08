@@ -1,23 +1,32 @@
 name: "Auto Doc Generation"
 description: "Automatically generate and update docstrings in Python files"
 inputs:
-  scan-dir:
-    description: "Directory to scan for Python files"
+  openai-api-key:
+    description: "API key for OpenAI"
     required: true
-    default: "." # Default value if not provided by the user
   reviewers:
     description: "Reviewers for the pull request"
     required: false
     default: ""
+  paths:
+    description: "List of directories and/or files to scan"
+    required: true
+    default: "." # Default value if not provided by the user
+  code-entities:
+    description: "List of code entities to generate docstrings for"
+    required: false
+    default: "function, class, method"
+  prompt:
+    description: "Prompt to use for generating docstrings"
+    required: false
+    default: "" # In source code
 
 runs:
   using: "composite"
   steps:
-
     - uses: actions/checkout@v3
 
     - name: Set up Python ${{ matrix.python-version }}
-      shell: bash
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
@@ -30,8 +39,10 @@ runs:
     - name: Run script to generate and update docstrings
       shell: bash
       env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      run: python generate_docs.py ${{ inputs.scan-dir }}
+        OPENAI_API_KEY: ${{ inputs.openai-api-key }}
+        PATHS: ${{ inputs.paths }}
+        CODE_ENTITIES: ${{ inputs.code-entities }}
+      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.paths }}
 
     - name: Commit changes
       shell: bash
@@ -42,7 +53,6 @@ runs:
         git commit -m "Auto-generated docstrings"
 
     - name: Create Pull Request
-      shell: bash
       uses: peter-evans/create-pull-request@v3
       with:
         title: "Auto-generated documentation"

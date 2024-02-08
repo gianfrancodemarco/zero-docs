@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "zero-docs"
+version = "0.1.0"
+description = "Zero Docs is a tool to generate docstrings for Python code using GPT."
+authors = ["Gianfranco Demarco <gianfrademarco@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openai = "^1.12.0"
+cst = "^1.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
