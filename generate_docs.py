@@ -22,7 +22,10 @@ def generate_docstring(text):
             messages=[
                 {
                     "role": "system",
-                    "content": "You must generate a docstring for the following Python code:",
+                    "content": """
+                    You are an AI assistant that generates docstrings Python code. Be as concise and pythonic as possible.
+                    Don't add anything you don't see in the code.\nGenerate the dostring for this piece of code:\n\n
+                    """,
                 },
                 {
                     "role": "system",
