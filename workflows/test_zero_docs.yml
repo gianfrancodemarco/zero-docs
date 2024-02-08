@@ -1,0 +1,17 @@
+name: Auto Doc Generation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  auto_doc_generation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Docs
+        uses: gianfrancodemarco/zero-docs-action@main
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          scan-dir: tests
+          reviewers: gianfrancodemarco
