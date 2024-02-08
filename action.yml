@@ -1,0 +1,54 @@
+name: "Auto Doc Generation"
+description: "Automatically generate and update docstrings in Python files"
+inputs:
+  scan-dir:
+    description: "Directory to scan for Python files"
+    required: true
+    default: "." # Default value if not provided by the user
+  reviewers:
+    description: "Reviewers for the pull request"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      shell: bash
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        pip install openai
+
+    - name: Run script to generate and update docstrings
+      shell: bash
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: python generate_docs.py ${{ inputs.scan-dir }}
+
+    - name: Commit changes
+      shell: bash
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Auto-generated docstrings"
+
+    - name: Create Pull Request
+      shell: bash
+      uses: peter-evans/create-pull-request@v3
+      with:
+        title: "Auto-generated documentation"
+        body: |
+          This PR includes auto-generated documentation for Python files.
+        labels: "documentation"
+        branch: "auto-docs"
+        base: "main"
+        reviewers: ${{ inputs.reviewers }}
