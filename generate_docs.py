@@ -10,6 +10,7 @@ from openai import OpenAI
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def generate_docstring(text):
     # Function to generate docstring using OpenAI API
     # This function takes input `text` and returns the generated docstring
@@ -36,11 +37,13 @@ def generate_docstring(text):
         )
 
         end_time = time.time()
-        logger.info(f"OpenAI call completed in {end_time - start_time:.2f} seconds")
+        logger.info(
+            f"OpenAI call completed in {end_time - start_time:.2f} seconds")
         return chat_completion.choices[0].message.content.strip()
     except Exception as e:
         logger.error(f"Error generating docstring: {e}")
         return ""
+
 
 def update_docstrings(filename):
     logger.info(f"Updating docstrings in file: {filename}")
@@ -54,8 +57,10 @@ def update_docstrings(filename):
             if not ast.get_docstring(node):
 
                 start_line = node.lineno - 1
-                end_line = node.body[0].lineno - 1 if node.body else node.lineno
-                code_block = "\n".join(content.split("\n")[start_line:end_line])
+                end_line = node.body[0].lineno - \
+                    1 if node.body else node.lineno
+                code_block = "\n".join(content.split("\n")[
+                                       start_line:end_line])
                 generated_docstring = generate_docstring(code_block)
 
                 if generated_docstring:
@@ -72,35 +77,44 @@ def update_docstrings(filename):
     with open(filename, "w") as f:
         f.write(updated_code)
 
+
 def update_docstrings(files):
     for filename in files:
         update_docstrings(filename)
 
-def get_files(scan_dir: str, files: str):
-    if not files:
-        files = []
-        logger.info(f"Getting files from directory: {scan_dir}")
-        # Scan directory for Python files
-        for root, _, files_ in os.walk(scan_dir):
-            for file in files_:
-                if file.endswith(".py"):
-                    files.append(os.path.join(root, file))
+
+def get_files_from_dir(scan_dir: str):
+    files = []
+    logger.info(f"Getting files from directory: {scan_dir}")
+    # Scan directory for Python files
+    for root, _, files_ in os.walk(scan_dir):
+        for file in files_:
+            if file.endswith(".py"):
+                files.append(os.path.join(root, file))
     return files
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        logger.error("Usage: python generate_docs.py <SCAN_DIR> <FILES>")
+        logger.error("Usage: python generate_docs.py <FILES|SCAN_DIR>")
         sys.exit(1)
 
-    SCAN_DIR = sys.argv[1]
-    FILES = sys.argv[2]
+    FILES_OR_SCAN_DIR = sys.argv[1]
 
-    if SCAN_DIR and FILES:
-        raise ValueError("Only one between SCAN_DIR and FILES should be set")
+    if os.path.isdir(FILES_OR_SCAN_DIR):
+        SCAN_DIR = FILES_OR_SCAN_DIR
+        FILES = None
+    else:
+        SCAN_DIR = None
+        FILES = FILES_OR_SCAN_DIR.split(",")
 
-    if not SCAN_DIR and not FILES:
-        raise ValueError("One between SCAN_DIR and FILES should be set")
+    # if SCAN_DIR and FILES:
+    #     raise ValueError("Only one between SCAN_DIR and FILES should be set")
 
-    files = get_files(SCAN_DIR, FILES)
+    # if not SCAN_DIR and not FILES:
+    #     raise ValueError("One between SCAN_DIR and FILES should be set")
+
+    if SCAN_DIR:
+        files = get_files_from_dir(SCAN_DIR)
 
     update_docstrings(files)

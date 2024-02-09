@@ -37,7 +37,7 @@ runs:
       shell: bash
       env:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
-      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.scan-dir }} ${{ inputs.files }}
+      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.files || inputs.scan-dir }}
 
     - name: Commit changes
       shell: bash
