@@ -94,7 +94,8 @@ def get_files_from_dirs(args: list[str]):
                     if file.endswith(".py"):
                         files.append(os.path.join(root, file))
         else:
-            files.append(arg)
+            if arg.endswith(".py"):
+                files.append(arg)
 
     return files
 
