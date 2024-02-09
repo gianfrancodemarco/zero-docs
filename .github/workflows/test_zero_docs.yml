@@ -18,6 +18,8 @@ jobs:
   #         reviewers: gianfrancodemarco
   fetch_files:
     runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
 
       - uses: actions/checkout@v4

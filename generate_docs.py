@@ -103,6 +103,6 @@ if __name__ == "__main__":
 
     logging.info(f"argvs: {sys.argv}")
 
-    files = get_files_from_dirs(sys.argv)
+    files = get_files_from_dirs(sys.argv[1:])
     for filename in files:
         update_docstrings(filename)
