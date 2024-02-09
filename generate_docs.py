@@ -1,7 +1,7 @@
 import ast
+import logging
 import os
 import sys
-import logging
 import time
 
 from openai import OpenAI
@@ -78,11 +78,6 @@ def update_docstrings(filename):
         f.write(updated_code)
 
 
-def update_docstrings(files):
-    for filename in files:
-        update_docstrings(filename)
-
-
 def get_files_from_dir(scan_dir: str):
     files = []
     logger.info(f"Getting files from directory: {scan_dir}")
@@ -117,4 +112,5 @@ if __name__ == "__main__":
     if SCAN_DIR:
         files = get_files_from_dir(SCAN_DIR)
 
-    update_docstrings(files)
+    for filename in files:
+        update_docstrings(filename)
