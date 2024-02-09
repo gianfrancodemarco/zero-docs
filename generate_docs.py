@@ -90,11 +90,13 @@ def get_files_from_dir(scan_dir: str):
 
 
 if __name__ == "__main__":
+
     if len(sys.argv) != 2:
         logger.error("Usage: python generate_docs.py <FILES|SCAN_DIR>")
         sys.exit(1)
 
     FILES_OR_SCAN_DIR = sys.argv[1]
+    logging.info(f"FILES_OR_SCAN_DIR: {FILES_OR_SCAN_DIR}")
 
     if os.path.isdir(FILES_OR_SCAN_DIR):
         SCAN_DIR = FILES_OR_SCAN_DIR
