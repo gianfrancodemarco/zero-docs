@@ -14,4 +14,5 @@ jobs:
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           scan-dir: tests
+          files: null
           reviewers: gianfrancodemarco
