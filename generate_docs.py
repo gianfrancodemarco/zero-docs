@@ -72,18 +72,35 @@ def update_docstrings(filename):
     with open(filename, "w") as f:
         f.write(updated_code)
 
-def update_docstrings_in_directory(scan_dir):
-    logger.info(f"Scanning directory: {scan_dir}")
-    # Scan directory for Python files
-    for root, _, files in os.walk(scan_dir):
-        for file in files:
-            if file.endswith(".py"):
-                filename = os.path.join(root, file)
-                update_docstrings(filename)
+def update_docstrings(files):
+    for filename in files:
+        update_docstrings(filename)
+
+def get_files(scan_dir: str, files: str):
+    if not files:
+        files = []
+        logger.info(f"Getting files from directory: {scan_dir}")
+        # Scan directory for Python files
+        for root, _, files_ in os.walk(scan_dir):
+            for file in files_:
+                if file.endswith(".py"):
+                    files.append(os.path.join(root, file))
+    return files
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        logger.error("Usage: python generate_docs.py <SCAN_DIR>")
+        logger.error("Usage: python generate_docs.py <SCAN_DIR> <FILES>")
         sys.exit(1)
+
     SCAN_DIR = sys.argv[1]
-    update_docstrings_in_directory(SCAN_DIR)
+    FILES = sys.argv[2]
+
+    if SCAN_DIR and FILES:
+        raise ValueError("Only one between SCAN_DIR and FILES should be set")
+
+    if not SCAN_DIR and not FILES:
+        raise ValueError("One between SCAN_DIR and FILES should be set")
+
+    files = get_files(SCAN_DIR, FILES)
+
+    update_docstrings(files)

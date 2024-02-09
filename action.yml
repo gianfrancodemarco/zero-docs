@@ -4,14 +4,18 @@ inputs:
   openai-api-key:
     description: "API key for OpenAI"
     required: true
-  scan-dir:
-    description: "Directory to scan for Python files"
-    required: true
-    default: "." # Default value if not provided by the user
   reviewers:
     description: "Reviewers for the pull request"
     required: false
     default: ""
+  scan-dir:
+    description: "Directory to scan for Python files. Alternative to files"
+    required: false
+    default: "." # Default value if not provided by the user
+  files:
+    description: "Files to scan. Alternative to scan-dir"
+    required: false
+    default: null # Default value if not provided by the user
 
 runs:
   using: "composite"
@@ -33,7 +37,7 @@ runs:
       shell: bash
       env:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
-      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.scan-dir }}
+      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.scan-dir }} ${{ inputs.files }}
 
     - name: Commit changes
       shell: bash
