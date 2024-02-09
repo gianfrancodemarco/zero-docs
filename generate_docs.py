@@ -78,14 +78,24 @@ def update_docstrings(filename):
         f.write(updated_code)
 
 
-def get_files_from_dir(scan_dir: str):
+def get_files_from_dirs(args: list[str]):
+    """
+    Each arg can be a directory or a file
+    For each directory, get all the py files in the directory
+    """
+
     files = []
-    logger.info(f"Getting files from directory: {scan_dir}")
-    # Scan directory for Python files
-    for root, _, files_ in os.walk(scan_dir):
-        for file in files_:
-            if file.endswith(".py"):
-                files.append(os.path.join(root, file))
+    for arg in args:
+        if os.path.isdir(arg):
+            logger.info(f"Getting files from directory: {arg}")
+            # Scan directory for Python files
+            for root, _, files_ in os.walk(arg):
+                for file in files_:
+                    if file.endswith(".py"):
+                        files.append(os.path.join(root, file))
+        else:
+            files.append(arg)
+
     return files
 
 
@@ -93,23 +103,6 @@ if __name__ == "__main__":
 
     logging.info(f"argvs: {sys.argv}")
 
-    if len(sys.argv) == 2:
-        SCAN_DIR = sys.argv[1]
-        FILES = None
-    else:
-        SCAN_DIR = None
-        FILES = sys.argv[1:]
-
-    # if SCAN_DIR and FILES:
-    #     raise ValueError("Only one between SCAN_DIR and FILES should be set")
-
-    # if not SCAN_DIR and not FILES:
-    #     raise ValueError("One between SCAN_DIR and FILES should be set")
-
-    if SCAN_DIR:
-        files = get_files_from_dir(SCAN_DIR)
-    else:
-        files = FILES
-
+    files = get_files_from_dirs(sys.argv)
     for filename in files:
         update_docstrings(filename)

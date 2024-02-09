@@ -30,6 +30,5 @@ jobs:
         uses: gianfrancodemarco/zero-docs-action@main
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          scan-dir: null
-          files: ${{ steps.fetch_files.outputs.files }}
+          paths: ${{ steps.fetch_files.outputs.files }}
           reviewers: gianfrancodemarco

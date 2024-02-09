@@ -8,19 +8,14 @@ inputs:
     description: "Reviewers for the pull request"
     required: false
     default: ""
-  scan-dir:
-    description: "Directory to scan for Python files. Alternative to files"
+  paths:
+    description: "List of directories and/or files to scan"
     required: false
     default: "." # Default value if not provided by the user
-  files:
-    description: "Files to scan. Alternative to scan-dir"
-    required: false
-    default: null # Default value if not provided by the user
 
 runs:
   using: "composite"
   steps:
-
     - uses: actions/checkout@v3
 
     - name: Set up Python ${{ matrix.python-version }}
@@ -37,7 +32,7 @@ runs:
       shell: bash
       env:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
-      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.files || inputs.scan-dir }}
+      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.paths }}
 
     - name: Commit changes
       shell: bash
