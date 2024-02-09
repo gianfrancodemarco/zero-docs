@@ -10,7 +10,7 @@ inputs:
     default: ""
   paths:
     description: "List of directories and/or files to scan"
-    required: false
+    required: true
     default: "." # Default value if not provided by the user
 
 runs:
