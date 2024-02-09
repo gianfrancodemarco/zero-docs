@@ -108,6 +108,8 @@ if __name__ == "__main__":
 
     if SCAN_DIR:
         files = get_files_from_dir(SCAN_DIR)
+    else:
+        files = FILES
 
     for filename in files:
         update_docstrings(filename)
