@@ -33,7 +33,7 @@ def generate_docstring(text):
                     "content": text
                 }
             ],
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-1106",
         )
 
         end_time = time.time()
