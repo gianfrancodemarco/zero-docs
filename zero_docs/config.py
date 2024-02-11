@@ -1,3 +1,6 @@
+"""
+Generate the docstring for this module:
+"""
 import os
 
 MODEL = os.getenv("MODEL", "gpt-3.5-turbo-0125")

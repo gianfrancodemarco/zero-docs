@@ -1,3 +1,6 @@
+"""
+Return a list of Python files obtained from given directories and files.
+"""
 import logging
 import os
 
@@ -10,6 +13,9 @@ logger = logging.getLogger(__name__)
 
 
 def get_files(args: list[str]):
+    """
+    Return a list of Python files obtained from given directories and files.
+    """
     files = []
     for arg in args:
         if os.path.isdir(arg):

@@ -1,3 +1,6 @@
+"""
+Generate docstring for the function to call OpenAI to generate a docstring based on given code and code entity.
+"""
 import logging
 import time
 
@@ -10,12 +13,18 @@ logger = logging.getLogger(__name__)
 
 
 class DocstringManager:
+    """
+    Generate docstring for the function to call OpenAI to generate a docstring based on given code and code entity.
+    """
 
     def generate(
         self,
         code: str,
         code_entity: CodeEntity
     ) -> str:
+        """
+        Generate docstring for the function to call OpenAI to generate a docstring based on given code and code entity.
+        """
         logger.info("Calling OpenAI to generate docstring...")
         start_time = time.time()
         client = OpenAI()
@@ -44,6 +53,9 @@ class DocstringManager:
         docstring: str,
         num_indented_blocks: int
     ) -> str:
+        """
+        Converts the given docstring to use triple double quotes and applies the specified number of indented blocks.
+        """
 
         docstring = docstring.strip().replace("'''", '"""')
 
