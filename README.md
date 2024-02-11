@@ -85,7 +85,7 @@ jobs:
 | openai-api-key  | API key for OpenAI                        | true     | -             |
 | reviewers       | A comma or newline-separated list of reviewers (GitHub usernames) to request a review from. (via [create-pull-request](https://github.com/peter-evans/create-pull-request))    | false    | -
 | paths           | **Space** separated list of directories and/or files to scan | true     | . (root)     |
-| code-entities   | Comma separated list of code entities to generate docstrings for | false    | function, class, method |
+| code-entities   | Comma separated list of code entities to generate docstrings for | false    | module,class,function |
 | prompt          | Prompt to use for generating docstrings   | false    | (in source code)             |
 
 ## Roadmap
@@ -97,11 +97,12 @@ jobs:
    2. [ ] Context-Aware: send the entire module to OpenAI, so it can understand the context of the code.
    3. [ ] Hybrid: send all the docstrings to OpenAI, and the module/class/function code we are documenting.
 4. [ ] **Replace Existing Documentation**: Add a parameter to replace existing documentation if present.
-5. [ ] **Allow for different LLMs to be used**
-6. [ ] **Selective Regeneration**: Implement a mechanism to regenerate documentation only for components modified within a PR.
-7. [ ] **Standalone Package**: Publish ZeroDocs as a Python package
-8. [ ] **Cost Estimation**: Add a preview feature to estimate costs before generating documentation.
-9. [ ] **Language Support**: Add support for languages other than Python.
+5. [ ] **Parallel Generation**: Add an option to generate documentation in parallel for multiple files.
+6. [ ] **Allow for different LLMs to be used**
+7. [ ] **Selective Regeneration**: Implement a mechanism to regenerate documentation only for components modified within a PR.
+8. [ ] **Standalone Package**: Publish ZeroDocs as a Python package
+9. [ ] **Cost Estimation**: Add a preview feature to estimate costs before generating documentation.
+10. [ ] **Language Support**: Add support for languages other than Python.
 
 
 Feel free to contribute to our project and help us make documentation hassle-free! 🚀📚

@@ -9,7 +9,7 @@ on:
       code-entities:
         description: "List of code entities to generate docstrings for"
         required: false
-        default: "function,class,method"
+        default: "module,class,function"
 
 jobs:
   auto_doc_generation:

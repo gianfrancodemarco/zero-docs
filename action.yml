@@ -15,7 +15,7 @@ inputs:
   code-entities:
     description: "List of code entities to generate docstrings for"
     required: false
-    default: "function,class,method"
+    default: "module,class,function"
   prompt:
     description: "Prompt to use for generating docstrings"
     required: false
