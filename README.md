@@ -2,7 +2,7 @@
 
 ![ZeroDocs](hero.jpg)
 
-ZeroDocs is a tool that provides an easy way to provide documentation for your code using OpenAI's APIs.  
+ZeroDocs is a tool that provides an easy way to provide docstrings for your  code with (kinda) zero effort, leveraging OpenAI's APIs.  
 It comes as a GitHub Action and can be easily integrated into your workflow.  
 It can be used, for example, to generate documentation for all files in a folder, specific files, or only files that have been modified in a pull request. 
 
