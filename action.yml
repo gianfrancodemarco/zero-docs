@@ -33,12 +33,9 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        ls
-        ls -la
-        pwd
         pip install poetry
-        poetry install
-        
+        poetry --directory ${GITHUB_ACTION_PATH}/zero_docs install
+
     - uses: actions/checkout@v3
 
     - name: Run script to generate and update docstrings
@@ -48,7 +45,7 @@ runs:
         ZERO_DOCS_INPUT_PATHS: ${{ inputs.paths }}
         ZERO_DOCS_CODE_ENTITIES: ${{ inputs.code-entities }}
         ZERO_DOCS_PROMPT: ${{ inputs.prompt }}
-      run: poetry run python ${GITHUB_ACTION_PATH}/zero_docs/main.py
+      run: poetry --directory ${GITHUB_ACTION_PATH}/zero_docs run python ${GITHUB_ACTION_PATH}/zero_docs/main.py
 
     - name: Commit changes
       shell: bash
