@@ -15,7 +15,7 @@ inputs:
   code-entities:
     description: "List of code entities to generate docstrings for"
     required: false
-    default: "function, class, method"
+    default: "function,class,method"
   prompt:
     description: "Prompt to use for generating docstrings"
     required: false
@@ -42,7 +42,7 @@ runs:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
         ZERO_DOCS_INPUT_PATHS: ${{ inputs.paths }}
         ZERO_DOCS_CODE_ENTITIES: ${{ inputs.code-entities }}
-      run: python ${GITHUB_ACTION_PATH}/generate_docs.py
+      run: python ${GITHUB_ACTION_PATH}/zero_docs/main.py
 
     - name: Commit changes
       shell: bash

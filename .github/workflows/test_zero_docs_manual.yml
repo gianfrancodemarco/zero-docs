@@ -1,9 +1,15 @@
 name: Auto Doc Generation
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      scan-dir:
+        type: string
+        description: "The directory to scan for doc generation"
+      code-entities:
+        description: "List of code entities to generate docstrings for"
+        required: false
+        default: "function,class,method"
 
 jobs:
   fetch_files:
@@ -11,16 +17,15 @@ jobs:
     outputs:
       files: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
-
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
 
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v42
         with:
-          since_last_remote_commit: true 
+          since_last_remote_commit: true
 
       - name: List all changed files
         env:
