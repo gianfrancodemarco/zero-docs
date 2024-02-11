@@ -1,6 +1,5 @@
 import logging
 import os
-import sys
 
 from zero_docs.config import ZERO_DOCS_INPUT_PATHS
 from zero_docs.docstring_generator import DocstringManager

@@ -97,10 +97,11 @@ jobs:
    2. [ ] Context-Aware: send the entire module to OpenAI, so it can understand the context of the code.
    3. [ ] Hybrid: send all the docstrings to OpenAI, and the module/class/function code we are documenting.
 4. [ ] **Replace Existing Documentation**: Add a parameter to replace existing documentation if present.
-5. [ ] **Selective Regeneration**: Implement a mechanism to regenerate documentation only for components modified within a PR.
-6. [ ] **Standalone Package**: Publish ZeroDocs as a Python package
-7. [ ] **Cost Estimation**: Add a preview feature to estimate costs before generating documentation.
-8. [ ] **Language Support**: Add support for languages other than Python.
+5. [ ] **Allow for different LLMs to be used**
+6. [ ] **Selective Regeneration**: Implement a mechanism to regenerate documentation only for components modified within a PR.
+7. [ ] **Standalone Package**: Publish ZeroDocs as a Python package
+8. [ ] **Cost Estimation**: Add a preview feature to estimate costs before generating documentation.
+9. [ ] **Language Support**: Add support for languages other than Python.
 
 
 Feel free to contribute to our project and help us make documentation hassle-free! 🚀📚
