@@ -24,6 +24,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v3
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -32,10 +34,12 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
+        ls
+        ls -la
+        pwd
+        tree /
         pip install poetry
         poetry install
-
-    - uses: actions/checkout@v3
 
     - name: Run script to generate and update docstrings
       shell: bash
