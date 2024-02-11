@@ -40,9 +40,9 @@ runs:
       shell: bash
       env:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
-        PATHS: ${{ inputs.paths }}
-        CODE_ENTITIES: ${{ inputs.code-entities }}
-      run: python ${GITHUB_ACTION_PATH}/generate_docs.py ${{ inputs.paths }}
+        ZERO_DOCS_INPUT_PATHS: ${{ inputs.paths }}
+        ZERO_DOCS_CODE_ENTITIES: ${{ inputs.code-entities }}
+      run: python ${GITHUB_ACTION_PATH}/generate_docs.py
 
     - name: Commit changes
       shell: bash

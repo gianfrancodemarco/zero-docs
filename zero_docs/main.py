@@ -1,14 +1,16 @@
 import logging
-import sys
-from docstring_generator import DocstringManager
-from docstring_updater import DocstringUpdater
 import os
+import sys
+
+from zero_docs.config import ZERO_DOCS_INPUT_PATHS
+from zero_docs.docstring_generator import DocstringManager
+from zero_docs.docstring_updater import DocstringUpdater
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def get_files_from_args(args: list[str]):
+def get_files(args: list[str]):
     files = []
     for arg in args:
         if os.path.isdir(arg):
@@ -28,8 +30,7 @@ if __name__ == "__main__":
 
     updater = DocstringUpdater(generator=DocstringManager())
 
-    files = get_files_from_args(sys.argv[1:])
-    files = get_files_from_args(["tests/tests.py"])
+    files = get_files(ZERO_DOCS_INPUT_PATHS)
 
     for filename in files:
         updater.update_docstrings(filename)

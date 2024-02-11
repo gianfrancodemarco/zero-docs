@@ -3,7 +3,7 @@ from typing import Any, Union
 
 import libcst as cst
 
-from zero_docs.config import CODE_ENTITIES
+from zero_docs.config import ZERO_DOCS_CODE_ENTITIES
 from zero_docs.docstring_generator import DocstringManager
 from zero_docs.enums import CodeEntity
 
@@ -28,7 +28,7 @@ class DocstringVisitor(cst.CSTTransformer):
         return updated_node
 
     def leave_Module(self, original_node: cst.Module, updated_node: cst.Module) -> None:
-        if CodeEntity.MODULE.value not in CODE_ENTITIES:
+        if CodeEntity.MODULE.value not in ZERO_DOCS_CODE_ENTITIES:
             return super().leave_Module(original_node, updated_node)
         return self._leave(original_node, updated_node, CodeEntity.MODULE)
 
@@ -36,7 +36,7 @@ class DocstringVisitor(cst.CSTTransformer):
         # We are generating docstrings for the class after we leave it, so we should temporarily add
         # one indentation level to the number of indented blocks.
         # We should generate the docstring when we enter the class, so we can simplify this logic
-        if CodeEntity.CLASS.value not in CODE_ENTITIES:
+        if CodeEntity.CLASS.value not in ZERO_DOCS_CODE_ENTITIES:
             return super().leave_classDef(original_node, updated_node)
         self.num_indented_blocks += 1
         new_leave = self._leave(original_node, updated_node, CodeEntity.CLASS)
@@ -47,7 +47,7 @@ class DocstringVisitor(cst.CSTTransformer):
         # We are generating docstrings for the function after we leave it, so we should temporarily add
         # one indentation level to the number of indented blocks.
         # We should generate the docstring when we enter the function , so we can simplify this logic
-        if CodeEntity.FUNCTION.value not in CODE_ENTITIES:
+        if CodeEntity.FUNCTION.value not in ZERO_DOCS_CODE_ENTITIES:
             return super().leave_FunctionDef(original_node, updated_node)
         self.num_indented_blocks += 1
         new_leave = self._leave(original_node, updated_node, CodeEntity.FUNCTION)
