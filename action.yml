@@ -43,7 +43,7 @@ runs:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
         ZERO_DOCS_INPUT_PATHS: ${{ inputs.paths }}
         ZERO_DOCS_CODE_ENTITIES: ${{ inputs.code-entities }}
-      run: python ${GITHUB_ACTION_PATH}/zero_docs/main.py
+      run: poetry run python ${GITHUB_ACTION_PATH}/zero_docs/main.py
 
     - name: Commit changes
       shell: bash
