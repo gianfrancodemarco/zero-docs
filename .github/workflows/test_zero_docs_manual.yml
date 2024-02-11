@@ -16,8 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate Docs
-        uses: gianfrancodemarco/zero-docs-action@main
+        uses: gianfrancodemarco/zero-docs@main
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           paths: ${{ github.event.inputs.paths }}
+          code-entities: ${{ github.event.inputs.code-entities }}
           reviewers: gianfrancodemarco
