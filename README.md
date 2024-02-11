@@ -84,7 +84,7 @@ jobs:
 |-----------------|-------------------------------------------|----------|---------------|
 | openai-api-key  | API key for OpenAI                        | true     | -             |
 | reviewers       | A comma or newline-separated list of reviewers (GitHub usernames) to request a review from. (via [create-pull-request](https://github.com/peter-evans/create-pull-request))    | false    | -
-| paths           | Comma separated list of directories and/or files to scan | true     | . (root)     |
+| paths           | **Space** separated list of directories and/or files to scan | true     | . (root)     |
 | code-entities   | Comma separated list of code entities to generate docstrings for | false    | function, class, method |
 | prompt          | Prompt to use for generating docstrings   | false    | (in source code)             |
 

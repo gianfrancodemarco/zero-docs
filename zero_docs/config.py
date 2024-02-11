@@ -1,7 +1,7 @@
 import os
 
 MODEL = os.getenv("MODEL", "gpt-3.5-turbo-0125")
-ZERO_DOCS_INPUT_PATHS = os.getenv("ZERO_DOCS_INPUT_PATHS", ".").split(",")
+ZERO_DOCS_INPUT_PATHS = os.getenv("ZERO_DOCS_INPUT_PATHS", ".").split(" ")
 if ZERO_DOCS_INPUT_PATHS == '/':
     raise ValueError("ZERO_DOCS_INPUT_PATHS cannot be /")
 
