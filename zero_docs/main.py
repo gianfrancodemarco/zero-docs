@@ -26,7 +26,6 @@ def get_files(args: list[str]):
 
 
 if __name__ == "__main__":
-    logging.info(f"argvs: {sys.argv}")
 
     updater = DocstringUpdater(generator=DocstringManager())
 
