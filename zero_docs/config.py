@@ -13,7 +13,7 @@ Generate a descriptive docstring for this Python {code_entity}, including detail
 Example format:
 
 def my_func(param1, param2):
-    """Description of what my_func does.
+    \"\"\"Description of what my_func does.
 
     Args:
         param1 (type): What param1 represents.
@@ -24,7 +24,7 @@ def my_func(param1, param2):
 
     Raises:
         ExceptionType: When this exception occurs.
-    """
+    \"\"\"
     ...
 Include the above sections only if they apply to your specific {code_entity}
 """
