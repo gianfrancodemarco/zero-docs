@@ -7,7 +7,7 @@ if ZERO_DOCS_INPUT_PATHS == '/':
 
 ZERO_DOCS_CODE_ENTITIES = os.getenv("CODE_ENTITIES", "module,class,function").split(",")
 
-_prompt = "You are an AI assistant that generates docstrings for Python code. Be as concise and pythonic as possible.\n\nReturn ONLY the docstring text, no markdown syntax.\n\nGenerate the docstring for this {code_entity}:"
+_prompt = "Generate a descriptive docstring for this Python {code_entity}, including details about any parameters, return values, and exceptions raised. Use proper formatting according to PEP257 guidelines. Focus on what the function does instead of how it does it."
 PROMPT = os.getenv(
     "PROMPT",
     _prompt
