@@ -34,7 +34,7 @@ class DocstringManager:
                         {code}
 
                         Docstring:
-                    )
+                    """)
                 }
             ],
             model=MODEL
