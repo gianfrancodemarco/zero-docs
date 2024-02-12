@@ -25,7 +25,7 @@ def my_func(param1, param2):
     Raises:
         ExceptionType: When this exception occurs.
     \"\"\"
-    ...
+
 Include the above sections only if they apply to your specific {code_entity}
 """
 

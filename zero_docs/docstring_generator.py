@@ -2,6 +2,7 @@ import logging
 import time
 
 from openai import OpenAI
+from textwrap import dedent
 
 from zero_docs.config import MODEL, PROMPT
 from zero_docs.enums import CodeEntity
@@ -27,7 +28,13 @@ class DocstringManager:
                 },
                 {
                     "role": "user",
-                    "content": code
+                    "content": dedent(f"""
+                        Code:
+                        
+                        {code}
+
+                        Docstring:
+                    )
                 }
             ],
             model=MODEL
