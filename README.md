@@ -20,7 +20,11 @@ on:
     inputs:
       paths:
         type: string
-        description: 'The directory to scan for doc generation'
+        description: "Space separated list of directories and/or files to scan"
+      code-entities:
+        description: "List of code entities to generate docstrings for"
+        required: false
+        default: "module,class,function"
 
 jobs:
   auto_doc_generation:
@@ -30,7 +34,7 @@ jobs:
         uses: gianfrancodemarco/zero-docs@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          paths: ${{ github.event.inputs.scan-dir }}
+          paths: ${{ github.event.inputs.paths }}
           reviewers: gianfrancodemarco
 ```
 
