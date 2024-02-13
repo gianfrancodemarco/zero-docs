@@ -30,7 +30,6 @@ class DocstringManager:
                     "role": "user",
                     "content": dedent(f"""
                         Code:
-                        
                         {code}
 
                         Docstring:

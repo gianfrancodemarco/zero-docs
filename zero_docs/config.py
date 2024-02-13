@@ -10,21 +10,44 @@ ZERO_DOCS_CODE_ENTITIES = os.getenv("CODE_ENTITIES", "module,class,function").sp
 _prompt = """
 Generate a descriptive docstring for this Python {code_entity}, including details about any parameters, return values, and exceptions raised. Use proper formatting according to PEP257 guidelines. Focus on what the {code_entity} does instead of how it does it.
 
-Example format:
+Example:
 
-def my_func(param1, param2):
-    \"\"\"Description of what my_func does.
+Code:
+def check_password(self, password):
+    return bcrypt.checkpw(password.encode(), self.password.encode())
 
-    Args:
-        param1 (type): What param1 represents.
-        param2 (type): What param2 represents.
+Docstring:
+\"\"\"Check if the given password is correct using bcrypt.
 
-    Returns:
-        type: What is returned.
+Args:
+    password (str): The password to check.
 
-    Raises:
-        ExceptionType: When this exception occurs.
-    \"\"\"
+Returns:
+    bool: True if the password is correct, False otherwise.
+\"\"\"
+
+Example 2:
+
+Code:
+class User:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode(), self.password.encode())
+
+
+Docstring:
+\"\"\"A user of the application. A user has a username and password, and can check their password.
+
+Attributes:
+    username (str): The username of the user.
+    password (str): The hashed password of the user.
+
+Methods:
+    check_password: Check if the given password is correct.
+\"\"\"
 
 Include the above sections only if they apply to your specific {code_entity}
 """
