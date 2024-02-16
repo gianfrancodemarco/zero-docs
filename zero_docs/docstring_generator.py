@@ -4,7 +4,7 @@ import time
 from openai import OpenAI
 from textwrap import dedent
 
-from zero_docs.config import MODEL, PROMPT
+from zero_docs.config import MODEL, PROMPTS_MAPPING
 from zero_docs.enums import CodeEntity
 
 logger = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ class DocstringManager:
             messages=[
                 {
                     "role": "system",
-                    "content": PROMPT.format(code_entity=code_entity.value)
+                    "content": PROMPTS_MAPPING.get(code_entity.value)
                 },
                 {
                     "role": "user",
