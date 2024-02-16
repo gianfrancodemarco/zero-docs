@@ -16,8 +16,16 @@ inputs:
     description: "List of code entities to generate docstrings for"
     required: false
     default: "module,class,function"
-  prompt:
-    description: "Prompt to use for generating docstrings"
+  function-prompt:
+    description: "Prompt to use for generating docstrings for functions"
+    required: false
+    default: "" # In source code
+  class-prompt:
+    description: "Prompt to use for generating docstrings for classes"
+    required: false
+    default: "" # In source code
+  module-prompt:
+    description: "Prompt to use for generating docstrings for modules"
     required: false
     default: "" # In source code
 
@@ -44,7 +52,10 @@ runs:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
         ZERO_DOCS_INPUT_PATHS: ${{ inputs.paths }}
         ZERO_DOCS_CODE_ENTITIES: ${{ inputs.code-entities }}
-        ZERO_DOCS_PROMPT: ${{ inputs.prompt }}
+        ZERO_DOCS_FUNCTION_PROMPT: ${{ inputs.function-prompt }}
+        ZERO_DOCS_CLASS_PROMPT: ${{ inputs.class-prompt }}
+        ZERO_DOCS_MODULE_PROMPT: ${{ inputs.module-prompt }}
+
       run: poetry --directory ${GITHUB_ACTION_PATH}/zero_docs run python ${GITHUB_ACTION_PATH}/zero_docs/main.py
 
     - name: Commit changes
