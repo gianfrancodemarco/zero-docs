@@ -5,10 +5,11 @@ ZERO_DOCS_INPUT_PATHS = os.getenv("ZERO_DOCS_INPUT_PATHS", ".").split(" ")
 if ZERO_DOCS_INPUT_PATHS == '/':
     raise ValueError("ZERO_DOCS_INPUT_PATHS cannot be /")
 
-ZERO_DOCS_CODE_ENTITIES = os.getenv("CODE_ENTITIES", "module,class,function").split(",")
+ZERO_DOCS_CODE_ENTITIES = os.getenv("ZERO_DOCS_CODE_ENTITIES", "module,class,function").split(",")
 
-_prompt = """
-Generate a descriptive docstring for this Python {code_entity}, including details about any parameters, return values, and exceptions raised. Use proper formatting according to PEP257 guidelines. Focus on what the {code_entity} does instead of how it does it.
+FUNCTION_PROMPT = """
+Generate a descriptive docstring for this Python function, including details about any parameters, return values, and exceptions raised. Use proper formatting according to PEP257 guidelines. Focus on what the function does instead of how it does it.
+Only include sections that are relevant to the function. For example, if the function does not raise any exceptions, do not include an exceptions section.
 
 Example:
 
@@ -25,8 +26,13 @@ Args:
 Returns:
     bool: True if the password is correct, False otherwise.
 \"\"\"
+"""
 
-Example 2:
+CLASS_PROMPT = """
+Generate a descriptive docstring for this Python class, including details about any attributes and methods. Use proper formatting according to PEP257 guidelines. Focus on what the class does instead of how it does it.
+Only include sections that are relevant to the class. For example, if the class does not have any methods, do not include a methods section
+
+Example:
 
 Code:
 class User:
@@ -48,13 +54,55 @@ Attributes:
 Methods:
     check_password: Check if the given password is correct.
 \"\"\"
-
-Include the above sections only if they apply to your specific {code_entity}
 """
 
-PROMPT = os.getenv(
-    "PROMPT",
-    _prompt
-)
-if not PROMPT:
-    PROMPT = _prompt
+MODULE_PROMPT = """
+Generate a descriptive docstring for this Python module, including a summary of the module's contents. Use proper formatting according to PEP257 guidelines.
+Only include sections that are relevant to the module. For example, if the module does not contain any classes, do not include a classes section.
+
+Example:
+
+Code:
+
+class Calculator:
+    def add(self,x, y):
+        return x + y
+
+    def subtract(self,x, y):
+        return x - y
+
+    def multiply(self,x, y):
+        return x * y
+
+    def divide(self,x, y):
+        if y == 0:
+            raise ZeroDivisionError("Division by zero is not allowed.")
+        return x / y
+
+
+Docstring:
+\"\"\"A simple calculator module.
+
+This module contains a class, Calculator
+which can perform basic arithmetic operations.
+
+Classes:
+    Calculator: A simple calculator class.
+
+Methods:
+    add: Add two numbers.
+    subtract: Subtract two numbers.
+    multiply: Multiply two numbers.
+    divide: Divide two numbers.
+
+Exceptions: 
+
+    ZeroDivisionError: Raised when attempting to divide by zero.
+\"\"\"
+"""
+
+PROMPTS_MAPPING = {
+    "function": os.getenv("ZERO_DOCS_FUNCTION_PROMPT", FUNCTION_PROMPT),
+    "class": os.getenv("ZERO_DOCS_CLASS_PROMPT", CLASS_PROMPT),
+    "module": os.getenv("ZERO_DOCS_MODULE_PROMPT", MODULE_PROMPT)
+}
