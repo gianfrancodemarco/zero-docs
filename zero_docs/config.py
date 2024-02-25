@@ -102,7 +102,7 @@ Exceptions:
 """
 
 PROMPTS_MAPPING = {
-    "function": os.getenv("ZERO_DOCS_FUNCTION_PROMPT", FUNCTION_PROMPT),
-    "class": os.getenv("ZERO_DOCS_CLASS_PROMPT", CLASS_PROMPT),
-    "module": os.getenv("ZERO_DOCS_MODULE_PROMPT", MODULE_PROMPT)
+    "function": os.getenv("ZERO_DOCS_FUNCTION_PROMPT") or FUNCTION_PROMPT,
+    "class": os.getenv("ZERO_DOCS_CLASS_PROMPT") or CLASS_PROMPT,
+    "module": os.getenv("ZERO_DOCS_MODULE_PROMPT") or MODULE_PROMPT
 }

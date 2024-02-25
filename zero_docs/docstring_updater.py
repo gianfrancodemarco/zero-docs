@@ -65,7 +65,7 @@ class DocstringVisitor(cst.CSTTransformer):
             return self._leave(original_node, updated_node, code_entity)
         except Exception as e:
             logger.error(
-                f"Error updating docstring for {original_node} {code_entity.value}: {e}"
+                f"Error updating docstring for {code_entity.value}: {e}"
             )
             return updated_node
 
