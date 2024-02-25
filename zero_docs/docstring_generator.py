@@ -20,6 +20,7 @@ class DocstringManager:
         logger.info("Calling OpenAI to generate docstring...")
         start_time = time.time()
         client = OpenAI()
+
         chat_completion = client.chat.completions.create(
             messages=[
                 {
@@ -28,12 +29,13 @@ class DocstringManager:
                 },
                 {
                     "role": "user",
-                    "content": dedent(f"""
-                        Code:
-                        {code}
-
-                        Docstring:
-                    """)
+                    "content": "\n".join([
+                        "Code:",
+                        code,
+                        "",
+                        "Docstring:",
+                        ""
+                    ])
                 }
             ],
             model=MODEL
@@ -51,11 +53,20 @@ class DocstringManager:
         num_indented_blocks: int
     ) -> str:
 
-        docstring = docstring.strip().replace("'''", '"""')
+        docstring = docstring.strip()
+        replaces = {
+            "'''": '"""',
+            "```plaintext": '"""',
+            "```": '"""',
+            "Docstring:\n": "",
+            "\n": "\n" + "    " * num_indented_blocks
+        }
+
+        for old, new in replaces.items():
+            docstring = docstring.replace(old, new)
+        docstring = docstring.strip()
 
         if not docstring.startswith('"""'):
             docstring = f'"""\n{docstring}\n"""'
-
-        docstring = docstring.replace("\n", "\n" + "    " * num_indented_blocks)
 
         return docstring
