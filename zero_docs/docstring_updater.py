@@ -99,9 +99,14 @@ class DocstringUpdater:
         self.generator = generator
 
     def update_docstrings(self, filename: str):
-        logger.info(f"Updating docstrings in file: {filename}")
         with open(filename, "r") as f:
             content = f.read()
+
+        logger.info(f"""
+            Updating docstrings in file: {filename}
+
+            content: {content}
+        """)
 
         module = cst.parse_module(content)
 
