@@ -1,4 +1,5 @@
 import logging
+from textwrap import dedent
 from typing import Any, Union
 
 import libcst as cst
@@ -30,7 +31,7 @@ class DocstringVisitor(cst.CSTTransformer):
     def leave_Module(self, original_node: cst.Module, updated_node: cst.Module) -> None:
         if CodeEntity.MODULE.value not in ZERO_DOCS_CODE_ENTITIES:
             return super().leave_Module(original_node, updated_node)
-        return self._leave(original_node, updated_node, CodeEntity.MODULE)
+        return self._safe_leave(original_node, updated_node, CodeEntity.MODULE)
 
     def leave_ClassDef(self, original_node: cst.ClassDef, updated_node: cst.ClassDef) -> cst.ClassDef:
         # We are generating docstrings for the class after we leave it, so we should temporarily add
@@ -39,7 +40,7 @@ class DocstringVisitor(cst.CSTTransformer):
         if CodeEntity.CLASS.value not in ZERO_DOCS_CODE_ENTITIES:
             return super().leave_ClassDef(original_node, updated_node)
         self.num_indented_blocks += 1
-        new_leave = self._leave(original_node, updated_node, CodeEntity.CLASS)
+        new_leave = self._safe_leave(original_node, updated_node, CodeEntity.CLASS)
         self.num_indented_blocks -= 1
         return new_leave
 
@@ -50,9 +51,23 @@ class DocstringVisitor(cst.CSTTransformer):
         if CodeEntity.FUNCTION.value not in ZERO_DOCS_CODE_ENTITIES:
             return super().leave_FunctionDef(original_node, updated_node)
         self.num_indented_blocks += 1
-        new_leave = self._leave(original_node, updated_node, CodeEntity.FUNCTION)
+        new_leave = self._safe_leave(original_node, updated_node, CodeEntity.FUNCTION)
         self.num_indented_blocks -= 1
         return new_leave
+
+    def _safe_leave(
+        self,
+        original_node: Union[cst.ClassDef, cst.FunctionDef, cst.Module],
+        updated_node: Union[cst.ClassDef, cst.FunctionDef, cst.Module],
+        code_entity: CodeEntity
+    ) -> Any:
+        try:
+            return self._leave(original_node, updated_node, code_entity)
+        except Exception as e:
+            logger.error(
+                f"Error updating docstring for {original_node} {code_entity.value}: {e}"
+            )
+            return updated_node
 
     def _leave(
         self,
@@ -102,11 +117,12 @@ class DocstringUpdater:
         with open(filename, "r") as f:
             content = f.read()
 
-        logger.info(f"""
+        logger.info(dedent(f"""
             Updating docstrings in file: {filename}
 
-            content: {content}
-        """)
+            content:
+            {content}
+        """))
 
         module = cst.parse_module(content)
 
