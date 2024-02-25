@@ -1,3 +1,28 @@
+"""
+A configuration module for generating descriptive docstrings for Python functions, classes, and modules.
+
+Constants:
+    - MODEL: The default model for docstring generation.
+    - ZERO_DOCS_INPUT_PATHS: Paths for input sources.
+    - ZERO_DOCS_CODE_ENTITIES: Code entities to include in docstrings.
+    - FUNCTION_PROMPT: Default prompt format for generating function docstrings.
+    - CLASS_PROMPT: Default prompt format for generating class docstrings.
+    - MODULE_PROMPT: Default prompt format for generating module docstrings.
+    
+Environment Variables:
+    - ZERO_DOCS_FUNCTION_PROMPT: Custom prompt for function docstrings.
+    - ZERO_DOCS_CLASS_PROMPT: Custom prompt for class docstrings.
+    - ZERO_DOCS_MODULE_PROMPT: Custom prompt for module docstrings.
+
+Functions:
+    - No functions in this module.
+
+Classes:
+    - No classes in this module.
+
+Modules:
+    - No modules in this module.
+"""
 import os
 
 MODEL = os.getenv("MODEL", "gpt-3.5-turbo-0125")
