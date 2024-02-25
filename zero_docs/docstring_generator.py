@@ -19,9 +19,7 @@ class DocstringManager:
     ) -> str:
         logger.info("Calling OpenAI to generate docstring...")
         start_time = time.time()
-    
-        system_message = PROMPTS_MAPPING.get(code_entity.value)
-        logging.info(f"System message: {system_message}")
+        client = OpenAI()
 
         chat_completion = client.chat.completions.create(
             messages=[
